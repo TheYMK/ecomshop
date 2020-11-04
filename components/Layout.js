@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { auth } from '../actions/firebase';
 import { useDispatch } from 'react-redux';
+import { getCurrentUser } from '../actions/auth';
 
 function Layout({ children }) {
 	const dispatch = useDispatch();
@@ -14,14 +15,21 @@ function Layout({ children }) {
 		const unsubscribe = auth.onAuthStateChanged(async (user) => {
 			if (user) {
 				const idTokenResult = await user.getIdTokenResult();
-				console.log('user', user);
-				dispatch({
-					type: 'LOGGED_IN_USER',
-					payload: {
-						email: user.email,
-						token: idTokenResult.token
-					}
-				});
+
+				getCurrentUser(idTokenResult.token)
+					.then((response) => {
+						dispatch({
+							type: 'LOGGED_IN_USER',
+							payload: {
+								name: response.data.name,
+								email: response.data.email,
+								token: idTokenResult.token,
+								role: response.data.role,
+								_id: response.data._id
+							}
+						});
+					})
+					.catch((err) => console.log(err));
 			}
 		});
 

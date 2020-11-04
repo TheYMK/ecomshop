@@ -7,6 +7,8 @@ import { REGISTER_REDIRECT_URL } from '../../config';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
 import Link from 'next/link';
+import axios from 'axios';
+import { createOrUpdateUser, getCurrentUser } from '../../actions/auth';
 
 function LoginComponent() {
 	const [ values, setValues ] = useState({
@@ -23,11 +25,25 @@ function LoginComponent() {
 	useEffect(
 		() => {
 			if (user && user.token) {
-				Router.push('/');
+				getCurrentUser(user.token).then((res) => {
+					if (res.data.role === 'admin') {
+						Router.push('/admin/dashboard');
+					} else {
+						Router.push('/user/history');
+					}
+				});
 			}
 		},
 		[ user ]
 	);
+
+	const roleBasedRedirect = (res) => {
+		if (res.data.role === 'admin') {
+			Router.push('/admin/dashboard');
+		} else {
+			Router.push('/user/history');
+		}
+	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -39,15 +55,25 @@ function LoginComponent() {
 
 			const idTokenResult = await user.getIdTokenResult();
 
-			dispatch({
-				type: 'LOGGED_IN_USER',
-				payload: {
-					email: user.email,
-					token: idTokenResult.token
-				}
-			});
-			toast.success('Welcome back dear customer, have a wonderful shopping day with us.');
-			Router.push('/');
+			createOrUpdateUser(idTokenResult.token)
+				.then((response) => {
+					dispatch({
+						type: 'LOGGED_IN_USER',
+						payload: {
+							name: response.data.name,
+							email: response.data.email,
+							token: idTokenResult.token,
+							role: response.data.role,
+							_id: response.data._id
+						}
+					});
+
+					toast.success('Welcome dear customer, have a wonderful shopping day with us.');
+					roleBasedRedirect(response);
+				})
+				.catch((err) => console.log(err));
+
+			// Router.push('/');
 		} catch (err) {
 			console.log(err);
 			toast.error(err.message);
@@ -62,15 +88,24 @@ function LoginComponent() {
 			.then(async (result) => {
 				const { user } = result;
 				const idTokenResult = await user.getIdTokenResult();
-				dispatch({
-					type: 'LOGGED_IN_USER',
-					payload: {
-						email: user.email,
-						token: idTokenResult.token
-					}
-				});
+				createOrUpdateUser(idTokenResult.token)
+					.then((response) => {
+						dispatch({
+							type: 'LOGGED_IN_USER',
+							payload: {
+								name: response.data.name,
+								email: response.data.email,
+								token: idTokenResult.token,
+								role: response.data.role,
+								_id: response.data._id
+							}
+						});
+						toast.success('Welcome back dear customer, have a wonderful shopping day with us.');
+						roleBasedRedirect(response);
+					})
+					.catch((err) => console.log(err));
 
-				Router.push('/');
+				// Router.push('/');
 			})
 			.catch((err) => {
 				setValues({ ...values, loading: false });

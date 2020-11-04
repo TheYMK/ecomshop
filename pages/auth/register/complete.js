@@ -4,6 +4,9 @@ import { auth } from '../../../actions/firebase';
 import { toast } from 'react-toastify';
 import Layout from '../../../components/Layout';
 import { Button } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { createOrUpdateUser } from '../../../actions/auth';
+import axios from 'axios';
 
 function RegisterComplete() {
 	const [ values, setValues ] = useState({
@@ -11,6 +14,9 @@ function RegisterComplete() {
 		password: '',
 		loading: false
 	});
+
+	const { user } = useSelector((state) => ({ ...state }));
+	const dispatch = useDispatch();
 
 	const { email, password, loading } = values;
 
@@ -47,6 +53,22 @@ function RegisterComplete() {
 
 				// redux store
 				console.log('user', user, 'idTokenResult', idTokenResult);
+				createOrUpdateUser(idTokenResult.token)
+					.then((response) => {
+						dispatch({
+							type: 'LOGGED_IN_USER',
+							payload: {
+								name: response.data.name,
+								email: response.data.email,
+								token: idTokenResult.token,
+								role: response.data.role,
+								_id: response.data._id
+							}
+						});
+						toast.success('Welcome back dear customer, have a wonderful shopping day with us.');
+					})
+					.catch((err) => console.log(err));
+
 				// redirect
 				Router.push('/');
 			}

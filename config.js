@@ -6,3 +6,4 @@ const { publicRuntimeConfig } = getConfig();
 
 export const REGISTER_REDIRECT_URL = publicRuntimeConfig.REGISTER_REDIRECT_URL;
 export const FORGOT_PASSWORD_REDIRECT_URL = publicRuntimeConfig.FORGOT_PASSWORD_REDIRECT_URL;
+export const API_URL = publicRuntimeConfig.API_URL;
