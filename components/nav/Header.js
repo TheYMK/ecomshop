@@ -58,12 +58,28 @@ function Header() {
 					title={user.email && user.email.split('@')[0]}
 					className="float-right"
 				>
-					<Item key="setting:1">
-						<Link href="/user/history">
-							<a>History</a>
-						</Link>
-					</Item>
-					<Item key="setting:2">Option 2</Item>
+					{user &&
+					user.role === 'subscriber' && (
+						<Item key="setting:1">
+							<Link href="/user/history">
+								<a>
+									<Item key="setting:1">Dashboard</Item>
+								</a>
+							</Link>
+						</Item>
+					)}
+
+					{user &&
+					user.role === 'admin' && (
+						<Item key="setting:1">
+							<Link href="/admin/dashboard">
+								<a>
+									<Item key="setting:1">Dashboard</Item>
+								</a>
+							</Link>
+						</Item>
+					)}
+
 					<Item icon={<LogoutOutlined />} onClick={logout}>
 						Logout
 					</Item>
