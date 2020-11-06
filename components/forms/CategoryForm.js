@@ -26,7 +26,7 @@ const CategoryForm = ({ handleSubmit, setValues, values }) => {
 				loading={loading}
 				disabled={!name}
 			>
-				Create
+				Save
 			</Button>
 		</form>
 	);
