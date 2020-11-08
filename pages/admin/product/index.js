@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { createProduct } from '../../../actions/product';
 import ProductCreateForm from '../../../components/forms/ProductCreateForm';
 import { getCategories, getCategorySubs } from '../../../actions/category';
+import FileUpload from '../../../components/forms/FileUpload';
 
 function ProductCreatePage() {
 	const { user } = useSelector((state) => ({ ...state }));
@@ -105,6 +106,15 @@ function ProductCreatePage() {
 							<div className="col-md-10">
 								<h4>Create Product</h4>
 								<hr />
+
+								<div className="p-3">
+									<FileUpload
+										values={values}
+										setValues={setValues}
+										setLoading={setLoading}
+										loading={loading}
+									/>
+								</div>
 
 								<ProductCreateForm
 									values={values}
