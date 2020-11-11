@@ -81,7 +81,6 @@ function ProductCreatePage() {
 	};
 
 	const handleCategoryChange = (e) => {
-		console.log('Clicked Category', e.target.value);
 		setValues({ ...values, category: e.target.value, subs: [] });
 		getCategorySubs(e.target.value)
 			.then((res) => {

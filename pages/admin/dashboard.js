@@ -1,5 +1,5 @@
 import Layout from '../../components/Layout';
-import React from 'react';
+import React, { useState } from 'react';
 import Admin from '../../components/auth/Admin';
 import AdminNav from '../../components/nav/AdminNav';
 
@@ -13,7 +13,9 @@ function AdminDashboardPage() {
 							<div className="col-md-2">
 								<AdminNav />
 							</div>
-							<div className="col">Admin dashboard page</div>
+							<div className="col-md-10">
+								<h4>Admin Dashboard</h4>
+							</div>
 						</div>
 					</div>
 				</Admin>

@@ -1,0 +1,12 @@
+.jumbotron {
+	background: url('/static/images/bg_1.jpg') no-repeat center center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+	height: 500px;
+	-o-background-size: cover;
+}
+
+.hero-text {
+	color: red
+}

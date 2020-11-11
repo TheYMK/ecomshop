@@ -13,7 +13,6 @@ function Admin({ children }) {
 			if (user && user.token) {
 				getCurrentAdmin(user.token)
 					.then((res) => {
-						console.log('CURRENT ADMIN RES', res);
 						setAccessGranted(true);
 					})
 					.catch((err) => {
