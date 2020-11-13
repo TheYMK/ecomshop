@@ -22,7 +22,7 @@ function ProductCreatePage() {
 		shipping: '',
 		quantity: '',
 		images: [],
-		colors: [ 'Black', 'Brown', 'Silver', 'Blue', 'Red' ], //those are for options
+		colors: [ 'Black', 'Brown', 'Silver', 'Blue', 'Red', 'Gold' ], //those are for options
 		brands: [ 'Apple', 'Samsung', 'Huawei', 'Microsoft', 'Xiaomi', 'Asus' ], //those are for options
 		color: '',
 		brand: ''

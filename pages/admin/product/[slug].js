@@ -25,7 +25,7 @@ function ProductUpdatePage({ product, subCategoriesOptions, subCategoriesIds, pa
 		shipping: product.shipping,
 		quantity: product.quantity,
 		images: product.images,
-		colors: [ 'Black', 'Brown', 'Silver', 'Blue', 'Red' ], //those are for options
+		colors: [ 'Black', 'Brown', 'Silver', 'Blue', 'Red', 'Gold' ], //those are for options
 		brands: [ 'Apple', 'Samsung', 'Huawei', 'Microsoft', 'Xiaomi', 'Asus' ], //those are for options
 		color: product.color,
 		brand: product.brand

@@ -2,6 +2,7 @@ import React from 'react';
 import { HeartOutlined, EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import '../../styles/ProductCard.module.css';
 import Link from 'next/link';
+import CurrencyFormat from 'react-currency-format';
 
 function ProductCard({ product }) {
 	return (
@@ -33,7 +34,15 @@ function ProductCard({ product }) {
 						<h4 className="product-card-title">{product.title}</h4>
 						<p className="product-card-para">{`${product.description.substring(0, 20)}...`}</p>
 						<p className="product-card-para">
-							<span className="product-card-price">${product.price} &ensp;</span>
+							<span className="product-card-price">
+								<CurrencyFormat
+									value={product.price}
+									displayType={'text'}
+									thousandSeparator={true}
+									prefix={'$'}
+								/>{' '}
+								&ensp;
+							</span>
 							<span className="product-card-crossed">$15.99</span>
 							<span className="product-card-off">&ensp;(60% OFF)</span>
 						</p>
@@ -45,9 +54,9 @@ function ProductCard({ product }) {
 									</div>
 								</a>
 							</div>
-							<div class="col-md-6 card-button">
+							<div className="col-md-6 card-button">
 								<a href="">
-									<div class="card-button-inner wish-button">
+									<div className="card-button-inner wish-button">
 										<HeartOutlined />
 									</div>
 								</a>

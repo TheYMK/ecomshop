@@ -6,17 +6,13 @@ function Hero({ loading, text }) {
 	return (
 		<React.Fragment>
 			<div className="jumbotron">
-				{loading ? (
-					<h4>Loading...</h4>
-				) : (
-					<Typewriter
-						options={{
-							strings: text,
-							autoStart: true,
-							loop: true
-						}}
-					/>
-				)}
+				<Typewriter
+					options={{
+						strings: text,
+						autoStart: true,
+						loop: true
+					}}
+				/>
 			</div>
 		</React.Fragment>
 	);

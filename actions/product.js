@@ -25,6 +25,7 @@ export const getSingleProduct = async (slug) => {
 	return await axios.get(`${API_URL}/product/${slug}`);
 };
 
+// this was supposed to be used in getstaticpaths function
 export const getAllProducts = async () => {
 	return await axios.get(`${API_URL}/products`);
 };
@@ -35,4 +36,12 @@ export const updateProduct = async (slug, product, authtoken) => {
 			authtoken
 		}
 	});
+};
+
+export const getProducts = async (sort, order, page) => {
+	return await axios.post(`${API_URL}/products/all`, { sort: sort, order: order, page: page });
+};
+
+export const getProductsTotalCount = async () => {
+	return await axios.get(`${API_URL}/products/total`);
 };
