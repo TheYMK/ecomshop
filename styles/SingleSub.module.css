@@ -1,0 +1,17 @@
+.hero-sub {
+    background: url('/static/images/bg3.jpg') no-repeat center center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+    background-size: cover;
+	height: 300px;
+	-o-background-size: cover;
+}
+
+.sub-title {
+    color: #fff;
+    font-weight: 200;
+    letter-spacing: 0.2em;
+}
+.sub-subtitle {
+    color: #fff;
+}

@@ -1,10 +1,9 @@
 import React from 'react';
 import { HeartOutlined, EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import '../../styles/ProductCard.module.css';
 import Link from 'next/link';
 import CurrencyFormat from 'react-currency-format';
 import { showAverage } from '../../actions/rating';
-
+import '../../styles/ProductCard.module.css';
 function ProductCard({ product }) {
 	return (
 		<React.Fragment>

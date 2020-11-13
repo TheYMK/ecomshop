@@ -24,7 +24,7 @@ function CategoryUpdatePage({ params }) {
 	}, []);
 
 	const loadCategory = () => {
-		return getSingleCategory(params.slug).then((c) => setValues({ ...values, name: c.data.name }));
+		return getSingleCategory(params.slug).then((c) => setValues({ ...values, name: c.data.category.name }));
 	};
 
 	const handleSubmit = (e) => {

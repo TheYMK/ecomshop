@@ -33,7 +33,7 @@ function SubUpdatePage({ params }) {
 		const c = await getCategories();
 		const s = await getSingleSub(params.slug);
 
-		return setValues({ ...values, categories: c.data, name: s.data.name, parentCategory: s.data.parent });
+		return setValues({ ...values, categories: c.data, name: s.data.sub.name, parentCategory: s.data.sub.parent });
 	};
 
 	// const loadSubs = async () => {

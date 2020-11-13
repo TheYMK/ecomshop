@@ -5,7 +5,7 @@ import Typewriter from 'typewriter-effect';
 function Hero({ loading, text }) {
 	return (
 		<React.Fragment>
-			<div className="jumbotron">
+			<div className="jumbotron hero-homepage">
 				<Typewriter
 					options={{
 						strings: text,

@@ -9,10 +9,8 @@ export const showAverage = (product) => {
 
 		ratingsArray.map((rating) => total.push(rating.star));
 		let totalReduced = total.reduce((prev, next) => prev + next, 0);
-		console.log(totalReduced);
 		let highest = length * 5;
 		let result = totalReduced * 5 / highest;
-		console.log('Average Rating', result);
 
 		return (
 			<div className="text-center pt-1 pb-3">
