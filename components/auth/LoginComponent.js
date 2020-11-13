@@ -7,7 +7,6 @@ import { REGISTER_REDIRECT_URL } from '../../config';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
 import Link from 'next/link';
-import axios from 'axios';
 import { createOrUpdateUser, getCurrentUser } from '../../actions/auth';
 
 function LoginComponent() {
@@ -17,9 +16,7 @@ function LoginComponent() {
 		loading: false
 	});
 	const { user } = useSelector((state) => ({ ...state }));
-
 	const dispatch = useDispatch();
-
 	const { email, password, loading } = values;
 
 	useEffect(

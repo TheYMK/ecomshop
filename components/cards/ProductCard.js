@@ -3,12 +3,20 @@ import { HeartOutlined, EyeOutlined, ShoppingCartOutlined } from '@ant-design/ic
 import '../../styles/ProductCard.module.css';
 import Link from 'next/link';
 import CurrencyFormat from 'react-currency-format';
+import { showAverage } from '../../actions/rating';
 
 function ProductCard({ product }) {
 	return (
 		<React.Fragment>
 			<div className="product-card">
 				<div className="product-card-head">
+					<div>
+						{product && product.ratings && product.ratings.length > 0 ? (
+							showAverage(product)
+						) : (
+							<div className="text-center pt-1 pb-3">No rating yet</div>
+						)}
+					</div>
 					<img
 						className="product-card-img-top"
 						src={
@@ -46,6 +54,7 @@ function ProductCard({ product }) {
 							<span className="product-card-crossed">$15.99</span>
 							<span className="product-card-off">&ensp;(60% OFF)</span>
 						</p>
+
 						<div className="row">
 							<div className="col-md-6 card-button">
 								<a href="">

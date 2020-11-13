@@ -45,3 +45,15 @@ export const getProducts = async (sort, order, page) => {
 export const getProductsTotalCount = async () => {
 	return await axios.get(`${API_URL}/products/total`);
 };
+
+export const productStarRating = async (product_id, rating, authtoken) => {
+	return await axios.put(`${API_URL}/product/star/${product_id}`, rating, {
+		headers: {
+			authtoken
+		}
+	});
+};
+
+export const getRelatedProducts = async (product_id) => {
+	return await axios.get(`${API_URL}/product/related/${product_id}`);
+};
