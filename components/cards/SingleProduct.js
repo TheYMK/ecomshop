@@ -1,7 +1,7 @@
 import React from 'react';
-import { Card, Tabs } from 'antd';
+import { Card, Tabs, Comment, Avatar } from 'antd';
 import Link from 'next/link';
-import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { HeartOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 import '../../styles/SingleProduct.module.css';
@@ -15,6 +15,32 @@ const { TabPane } = Tabs;
 
 function SingleProduct({ product, onStarClick, values, setValues, handleSubmitRating }) {
 	const { star, comment } = values;
+
+	const showComments = () => {
+		const allRatings = [];
+
+		const ratingArrays = product && product.ratings;
+
+		// ratingArrays.map((rating) => {
+		// 	return allComments.push(rating.comment);
+		// });
+
+		for (let i = 0; i < ratingArrays.length; i++) {
+			allRatings.push(ratingArrays[i]);
+		}
+
+		return allRatings.map((rating, index) => {
+			return (
+				<div key={index}>
+					<Comment
+						author={rating.postedBy}
+						avatar={<Avatar icon={<UserOutlined />} />}
+						content={<p>{rating.comment}</p>}
+					/>
+				</div>
+			);
+		});
+	};
 
 	return (
 		<React.Fragment>
@@ -38,6 +64,9 @@ function SingleProduct({ product, onStarClick, values, setValues, handleSubmitRa
 					</TabPane>
 					<TabPane tab="More" key="2">
 						Call us on +269 3325168 to learn more about this product
+					</TabPane>
+					<TabPane tab="Comments" key="3">
+						{showComments()}
 					</TabPane>
 				</Tabs>
 			</div>

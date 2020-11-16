@@ -57,3 +57,7 @@ export const productStarRating = async (product_id, rating, authtoken) => {
 export const getRelatedProducts = async (product_id) => {
 	return await axios.get(`${API_URL}/product/related/${product_id}`);
 };
+
+export const fetchProductByFilter = async (arg) => {
+	return await axios.post(`${API_URL}/search/filters`, arg);
+};

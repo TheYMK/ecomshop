@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
 import { Menu } from 'antd';
-import { AppstoreOutlined, SettingOutlined, UserOutlined, UserAddOutlined, LogoutOutlined } from '@ant-design/icons';
+import {
+	AppstoreOutlined,
+	SettingOutlined,
+	UserOutlined,
+	UserAddOutlined,
+	LogoutOutlined,
+	ShoppingOutlined
+} from '@ant-design/icons';
 import Link from 'next/link';
 import firebase from 'firebase';
 import { useDispatch, useSelector } from 'react-redux'; // useSelector used to get data from the state
 import Router from 'next/router';
+import Search from '../forms/Search';
 
 const { SubMenu, Item } = Menu;
 
@@ -33,6 +41,11 @@ function Header() {
 			<Item key="home" icon={<AppstoreOutlined />}>
 				<Link href="/">
 					<a>Home</a>
+				</Link>
+			</Item>
+			<Item key="shop" icon={<ShoppingOutlined />}>
+				<Link href="/shop">
+					<a>Shop</a>
 				</Link>
 			</Item>
 
@@ -85,6 +98,9 @@ function Header() {
 					</Item>
 				</SubMenu>
 			)}
+			<span className="float-right p-1">
+				<Search />
+			</span>
 		</Menu>
 	);
 }
