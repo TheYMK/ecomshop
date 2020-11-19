@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { auth } from '../actions/firebase';
 import { useDispatch } from 'react-redux';
 import { getCurrentUser } from '../actions/auth';
+import Footer from './nav/Footer';
+import CartDrawer from './drawer/CartDrawer';
 
 function Layout({ children }) {
 	const dispatch = useDispatch();
@@ -40,6 +42,7 @@ function Layout({ children }) {
 	return (
 		<React.Fragment>
 			<Header />
+			<CartDrawer />
 			<ToastContainer />
 			{children}
 		</React.Fragment>

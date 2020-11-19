@@ -3,18 +3,22 @@ import { Modal, Button } from 'antd';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { StarOutlined } from '@ant-design/icons';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 
-function RatingModal({ children, handleSubmitRating }) {
+function RatingModal({ children, handleSubmitRating, slug }) {
 	const { user } = useSelector((state) => ({ ...state }));
 	const [ modalVisible, setModalVisible ] = useState(false);
+	const router = useRouter();
 
 	const handleModal = (e) => {
 		if (user && user.token) {
 			setModalVisible(true);
 		} else {
 			// IMPROVEMENT TO BE DONE: save the current pathname to redux and in login page check after login if the previous pathname is there and redirect there instead
-			Router.push('/auth/login');
+			router.push({
+				pathname: '/auth/login',
+				query: { from: `product/${slug}` }
+			});
 		}
 	};
 

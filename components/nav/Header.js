@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Menu } from 'antd';
+import { Menu, Badge } from 'antd';
 import {
 	AppstoreOutlined,
 	SettingOutlined,
 	UserOutlined,
 	UserAddOutlined,
 	LogoutOutlined,
-	ShoppingOutlined
+	ShoppingOutlined,
+	ShoppingCartOutlined
 } from '@ant-design/icons';
 import Link from 'next/link';
 import firebase from 'firebase';
@@ -19,7 +20,7 @@ const { SubMenu, Item } = Menu;
 function Header() {
 	const [ current, setCurrent ] = useState('home');
 	const dispatch = useDispatch();
-	const { user } = useSelector((state) => ({ ...state }));
+	const { user, cart } = useSelector((state) => ({ ...state }));
 
 	const handleClick = (e) => {
 		setCurrent(e.key);
@@ -46,6 +47,13 @@ function Header() {
 			<Item key="shop" icon={<ShoppingOutlined />}>
 				<Link href="/shop">
 					<a>Shop</a>
+				</Link>
+			</Item>
+			<Item key="cart" icon={<ShoppingCartOutlined />}>
+				<Link href="/cart">
+					<Badge count={cart.length} offset={[ 9, 0 ]}>
+						Cart
+					</Badge>
 				</Link>
 			</Item>
 

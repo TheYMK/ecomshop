@@ -1,5 +1,5 @@
-import React from 'react';
-import { Card, Tabs, Comment, Avatar } from 'antd';
+import React, { useState } from 'react';
+import { Card, Tabs, Comment, Avatar, Tooltip } from 'antd';
 import Link from 'next/link';
 import { HeartOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
@@ -9,12 +9,20 @@ import ProductListItems from '../cards/ProductListItems';
 import StarRating from 'react-star-ratings';
 import RatingModal from '../modal/RatingModal';
 import { showAverage } from '../../actions/rating';
+import _ from 'lodash';
+import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const { Meta } = Card;
 const { TabPane } = Tabs;
 
 function SingleProduct({ product, onStarClick, values, setValues, handleSubmitRating }) {
 	const { star, comment } = values;
+	const [ tooltip, setTooltip ] = useState('Add to Cart');
+
+	// redux
+	const dispatch = useDispatch();
+	const { user, cart } = useSelector((state) => ({ ...state }));
 
 	const showComments = () => {
 		const allRatings = [];
@@ -40,6 +48,44 @@ function SingleProduct({ product, onStarClick, values, setValues, handleSubmitRa
 				</div>
 			);
 		});
+	};
+
+	const handleAddToCart = (e) => {
+		// Create cart array
+		let cart = [];
+		if (typeof window !== 'undefined') {
+			// check if cart is in localstorage, we get it
+			if (localStorage.getItem('cart')) {
+				cart = JSON.parse(localStorage.getItem('cart'));
+			}
+			// push new product to cart
+			cart.push({
+				...product,
+				count: 1
+			});
+
+			// remove duplicates
+			let uniqueProducts = _.uniqWith(cart, _.isEqual);
+			uniqueProducts = [ ...new Set(uniqueProducts) ];
+			// let uniqueProducts = [ ...new Set(cart) ];
+			// save to localstorage
+			// console.log('unique', unique);
+			localStorage.setItem('cart', JSON.stringify(uniqueProducts));
+			// show tooltip
+			setTooltip('Added');
+
+			// Add to redux state
+			dispatch({
+				type: 'ADD_TO_CART',
+				payload: uniqueProducts
+			});
+
+			toast.success('Product added to your cart');
+			dispatch({
+				type: 'SET_VISIBLE',
+				payload: true
+			});
+		}
 	};
 
 	return (
@@ -75,7 +121,7 @@ function SingleProduct({ product, onStarClick, values, setValues, handleSubmitRa
 				<Card
 					actions={[
 						<React.Fragment>
-							<ShoppingCartOutlined className="text-success" /> Add to Cart
+							<ShoppingCartOutlined onClick={handleAddToCart} className="text-success" /> Add to Cart
 						</React.Fragment>,
 						<React.Fragment>
 							<HeartOutlined className="text-danger" />
@@ -84,7 +130,7 @@ function SingleProduct({ product, onStarClick, values, setValues, handleSubmitRa
 							</Link>
 						</React.Fragment>,
 						<React.Fragment>
-							<RatingModal handleSubmitRating={handleSubmitRating}>
+							<RatingModal handleSubmitRating={handleSubmitRating} slug={product.slug}>
 								<div>
 									<StarRating
 										name={product._id}

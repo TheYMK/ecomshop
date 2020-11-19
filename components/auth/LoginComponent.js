@@ -5,8 +5,9 @@ import { Button } from 'antd';
 import { MailOutlined, GoogleOutlined } from '@ant-design/icons';
 import { REGISTER_REDIRECT_URL } from '../../config';
 import { useDispatch, useSelector } from 'react-redux';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import Link from 'next/link';
+
 import { createOrUpdateUser, getCurrentUser } from '../../actions/auth';
 
 function LoginComponent() {
@@ -19,14 +20,21 @@ function LoginComponent() {
 	const dispatch = useDispatch();
 	const { email, password, loading } = values;
 
+	const router = useRouter();
+	const { from } = router.query;
+
 	useEffect(
 		() => {
 			if (user && user.token) {
 				getCurrentUser(user.token).then((res) => {
-					if (res.data.role === 'admin') {
-						Router.push('/admin/dashboard');
+					if (router.query.from) {
+						Router.push(`/${from}`);
 					} else {
-						Router.push('/user/history');
+						if (res.data.role === 'admin') {
+							Router.push('/admin/dashboard');
+						} else {
+							Router.push('/user/history');
+						}
 					}
 				});
 			}
@@ -35,10 +43,14 @@ function LoginComponent() {
 	);
 
 	const roleBasedRedirect = (res) => {
-		if (res.data.role === 'admin') {
-			Router.push('/admin/dashboard');
+		if (router.query.from) {
+			Router.push(`/${from}`);
 		} else {
-			Router.push('/user/history');
+			if (res.data.role === 'admin') {
+				Router.push('/admin/dashboard');
+			} else {
+				Router.push('/user/history');
+			}
 		}
 	};
 

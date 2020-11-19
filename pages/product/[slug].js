@@ -95,21 +95,21 @@ function SingleProductPage({ product_from_db, params, related_products_from_db }
 	);
 }
 
-export async function getStaticPaths() {
-	// Call an external API endpoint to get posts
+// export async function getStaticPaths() {
+// 	// Call an external API endpoint to get posts
 
-	const res = await axios.get(`${API_URL}/products`);
+// 	const res = await axios.get(`${API_URL}/products`);
 
-	const products = await res.data;
+// 	const products = await res.data;
 
-	const paths = products.map((product) => ({
-		params: { slug: product.slug }
-	}));
+// 	const paths = products.map((product) => ({
+// 		params: { slug: product.slug }
+// 	}));
 
-	return { paths, fallback: true };
-}
+// 	return { paths, fallback: true };
+// }
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
 	return getSingleProduct(params.slug).then((res) => {
 		return getRelatedProducts(res.data._id).then((result) => {
 			return {
