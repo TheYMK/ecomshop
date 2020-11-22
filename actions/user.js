@@ -32,3 +32,39 @@ export const emptyUserCart = async (authtoken) => {
 		}
 	});
 };
+
+export const saveUserAddress = async (authtoken, address) => {
+	return await axios.post(
+		`${API_URL}/user/address`,
+		{ address },
+		{
+			headers: {
+				authtoken
+			}
+		}
+	);
+};
+
+export const applyCoupon = async (authtoken, coupon) => {
+	return await axios.put(
+		`${API_URL}/user/cart/coupon`,
+		{ coupon },
+		{
+			headers: {
+				authtoken
+			}
+		}
+	);
+};
+
+export const createOrder = async (stripeResponse, authtoken) => {
+	return await axios.post(
+		`${API_URL}/user/order`,
+		{ stripeResponse },
+		{
+			headers: {
+				authtoken
+			}
+		}
+	);
+};

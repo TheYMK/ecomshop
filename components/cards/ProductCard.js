@@ -102,13 +102,19 @@ function ProductCard({ product }) {
 						</p>
 
 						<div className="row">
-							<Tooltip title={tooltip}>
+							<Tooltip title={product.quantity < 1 ? 'Product out of stock' : tooltip}>
 								<div className="col-md-6 card-button">
-									<a onClick={handleAddToCart}>
-										<div className="card-button-inner bag-button">
-											<ShoppingCartOutlined />
-										</div>
-									</a>
+									{product.quantity < 1 ? (
+										<a disabled={product.quantity < 1}>
+											<div className="card-button-inner bag-button">Out of stock</div>
+										</a>
+									) : (
+										<a onClick={handleAddToCart} disabled={product.quantity < 1}>
+											<div className="card-button-inner bag-button">
+												<ShoppingCartOutlined />
+											</div>
+										</a>
+									)}
 								</div>
 							</Tooltip>
 							<Tooltip title="Add to Wishlist">

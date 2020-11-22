@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Tabs, Comment, Avatar, Tooltip } from 'antd';
 import Link from 'next/link';
-import { HeartOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
+import { HeartOutlined, ShoppingCartOutlined, UserOutlined, StopOutlined } from '@ant-design/icons';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 import '../../styles/SingleProduct.module.css';
@@ -121,7 +121,16 @@ function SingleProduct({ product, onStarClick, values, setValues, handleSubmitRa
 				<Card
 					actions={[
 						<React.Fragment>
-							<ShoppingCartOutlined onClick={handleAddToCart} className="text-success" /> Add to Cart
+							{product.quantity < 1 ? (
+								<React.Fragment>
+									<StopOutlined /> Out of stock
+								</React.Fragment>
+							) : (
+								<React.Fragment>
+									<ShoppingCartOutlined onClick={handleAddToCart} className="text-success" /> Add to
+									Cart
+								</React.Fragment>
+							)}
 						</React.Fragment>,
 						<React.Fragment>
 							<HeartOutlined className="text-danger" />
