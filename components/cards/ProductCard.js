@@ -8,7 +8,8 @@ import '../../styles/ProductCard.module.css';
 import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-
+import { addToWishlist } from '../../actions/user';
+import Router from 'next/router';
 function ProductCard({ product }) {
 	const [ tooltip, setTooltip ] = useState('Add to Cart');
 	// redux
@@ -50,6 +51,13 @@ function ProductCard({ product }) {
 				payload: true
 			});
 		}
+	};
+
+	const handleAddToWishlist = (e) => {
+		addToWishlist(product._id, user.token).then((res) => {
+			toast.success('Product added to wishlist');
+			Router.push('/user/wishlist');
+		});
 	};
 
 	return (
@@ -119,7 +127,7 @@ function ProductCard({ product }) {
 							</Tooltip>
 							<Tooltip title="Add to Wishlist">
 								<div className="col-md-6 card-button">
-									<a href="">
+									<a onClick={handleAddToWishlist}>
 										<div className="card-button-inner wish-button">
 											<HeartOutlined />
 										</div>

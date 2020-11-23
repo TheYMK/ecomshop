@@ -12,6 +12,8 @@ import { showAverage } from '../../actions/rating';
 import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { addToWishlist } from '../../actions/user';
+import Router from 'next/router';
 
 const { Meta } = Card;
 const { TabPane } = Tabs;
@@ -88,6 +90,13 @@ function SingleProduct({ product, onStarClick, values, setValues, handleSubmitRa
 		}
 	};
 
+	const handleAddToWishlist = (e) => {
+		addToWishlist(product._id, user.token).then((res) => {
+			toast.success('Product added to wishlist');
+			Router.push('/user/wishlist');
+		});
+	};
+
 	return (
 		<React.Fragment>
 			<div className="col-md-7">
@@ -133,10 +142,8 @@ function SingleProduct({ product, onStarClick, values, setValues, handleSubmitRa
 							)}
 						</React.Fragment>,
 						<React.Fragment>
-							<HeartOutlined className="text-danger" />
-							<Link href={`/`}>
-								<a>Add to Wishlist</a>
-							</Link>
+							<HeartOutlined className="text-danger" onClick={handleAddToWishlist} />
+							Add to Wishlist
 						</React.Fragment>,
 						<React.Fragment>
 							<RatingModal handleSubmitRating={handleSubmitRating} slug={product.slug}>
