@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Router from 'next/router';
+import { Spin } from 'antd';
 
 function LoadingToRedirect() {
 	const [ count, setCount ] = useState(5);
@@ -20,7 +21,7 @@ function LoadingToRedirect() {
 	return (
 		<React.Fragment>
 			<div className="container p-5 text-center">
-				<p>Redirecting you in {count} seconds</p>
+				<Spin tip={`Redirecting you in ${count} seconds`} />
 			</div>
 		</React.Fragment>
 	);

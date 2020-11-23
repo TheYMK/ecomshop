@@ -113,7 +113,13 @@ function StripeCheckout() {
 			{!succeeded && (
 				<div>
 					{coupon && totalAfterDiscount !== undefined ? (
-						<p className="alert alert-success">{`Total after discount: $${totalAfterDiscount}`}</p>
+						<p className="alert alert-success">{`Total after discount: ${totalAfterDiscount.toLocaleString(
+							'en-US',
+							{
+								style: 'currency',
+								currency: 'USD'
+							}
+						)}`}</p>
 					) : (
 						<p className="text-danger">No coupon applied</p>
 					)}
@@ -130,10 +136,18 @@ function StripeCheckout() {
 					}
 					actions={[
 						<React.Fragment>
-							<DollarOutlined className="text-info" /> <br /> Total: ${cartTotal}
+							<DollarOutlined className="text-info" /> <br /> Total:{' '}
+							{cartTotal.toLocaleString('en-US', {
+								style: 'currency',
+								currency: 'USD'
+							})}
 						</React.Fragment>,
 						<React.Fragment>
-							<CheckOutlined className="text-info" /> <br /> Total Payable: ${(payable / 100).toFixed(2)}
+							<CheckOutlined className="text-info" /> <br /> Total Payable:{' '}
+							{(payable / 100).toLocaleString('en-US', {
+								style: 'currency',
+								currency: 'USD'
+							})}
 						</React.Fragment>
 					]}
 				/>

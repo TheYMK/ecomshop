@@ -16,8 +16,6 @@ export const userCart = async (cart, authtoken) => {
 };
 
 export const getUserCart = async (authtoken) => {
-	// {cart} we use curly braces so that it will be available as req.body.cart instead of req.body
-	// or we can also pass it as object in parameters we calling this function
 	return await axios.get(`${API_URL}/user/cart`, {
 		headers: {
 			authtoken
@@ -67,4 +65,12 @@ export const createOrder = async (stripeResponse, authtoken) => {
 			}
 		}
 	);
+};
+
+export const getUserOrders = async (authtoken) => {
+	return await axios.get(`${API_URL}/user/orders`, {
+		headers: {
+			authtoken
+		}
+	});
 };

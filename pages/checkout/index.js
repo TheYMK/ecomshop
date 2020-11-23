@@ -103,7 +103,11 @@ function CheckoutPage() {
 				{products.map((p, index) => (
 					<div key={index}>
 						<p>
-							{p.product.title} : ({p.color}) x {p.count} | ${p.product.price * p.count}
+							{p.product.title} : ({p.color}) x {p.count} |{' '}
+							{(p.product.price * p.count).toLocaleString('en-US', {
+								style: 'currency',
+								currency: 'USD'
+							})}
 						</p>
 					</div>
 				))}
@@ -203,11 +207,21 @@ function CheckoutPage() {
 							<hr />
 							{showOrderSummary()}
 							<hr />
-							<h4>Cart Total: ${total}</h4>
+							<h4>
+								Cart Total:{' '}
+								{total.toLocaleString('en-US', {
+									style: 'currency',
+									currency: 'USD'
+								})}
+							</h4>
 							{totalAfterDiscount > 0 && (
 								<p className="bg-success p-2">
 									Discount Applied <br />
-									Price after discount: ${totalAfterDiscount}
+									Price after discount:{' '}
+									{totalAfterDiscount.toLocaleString('en-US', {
+										style: 'currency',
+										currency: 'USD'
+									})}
 								</p>
 							)}
 
