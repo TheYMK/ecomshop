@@ -28,6 +28,21 @@ function CartPage() {
 			.catch((err) => console.log(`Cart Save Err`, err));
 	};
 
+	const saveCashOrderToDB = () => {
+		dispatch({
+			type: 'SET_CASH_ON_DELIVERY',
+			payload: true
+		});
+		userCart(cart, user.token)
+			.then((res) => {
+				console.log('Cart Post Res', res);
+				if (res.data.success) {
+					Router.push('/checkout');
+				}
+			})
+			.catch((err) => console.log(`Cart Save Err`, err));
+	};
+
 	const showCartItems = () => {
 		return (
 			<div className="table-responsive">
@@ -86,13 +101,23 @@ function CartPage() {
 							</div>
 							<hr />
 							{user ? (
-								<button
-									className="btn btn-sm btn-primary mt-2 btn-raised"
-									onClick={saveOrderToDB}
-									disabled={!cart.length}
-								>
-									Proceed to Checkout
-								</button>
+								<React.Fragment>
+									<button
+										className="btn btn-sm btn-primary mt-2 btn-raised"
+										onClick={saveOrderToDB}
+										disabled={!cart.length}
+									>
+										Proceed to Checkout
+									</button>
+									<br />
+									<button
+										className="btn btn-sm btn-warning mt-2 btn-raised"
+										onClick={saveCashOrderToDB}
+										disabled={!cart.length}
+									>
+										Pay Cash on delivery
+									</button>
+								</React.Fragment>
 							) : (
 								<Link
 									href={{

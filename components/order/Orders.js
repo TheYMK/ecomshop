@@ -47,12 +47,12 @@ function Orders({ orders, handleStatusChange }) {
 
 	return (
 		<React.Fragment>
-			{orders.map((order, index) => (
+			{orders.map((order) => (
 				<div key={order._id} className="pb-5 m-5">
 					<div className="card">
 						<div
 							style={
-								order.order_status === 'Not Processed' ? (
+								order.order_status !== 'Completed' ? (
 									styles.orderCardBackgroundRed
 								) : (
 									styles.orderCardBackgroundGreen
@@ -71,6 +71,7 @@ function Orders({ orders, handleStatusChange }) {
 									name="status"
 								>
 									<option value="Not Processed">Not Processed</option>
+									<option value="Cash On Delivery">Cash On Delivery</option>
 									<option value="Processing">Processing</option>
 									<option value="Dispatched">Dispatched</option>
 									<option value="Cancelled">Cancelled</option>

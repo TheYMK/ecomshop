@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layout';
-import { getUserCart, emptyUserCart, saveUserAddress, applyCoupon } from '../../actions/user';
+import { getUserCart, emptyUserCart, saveUserAddress, applyCoupon, createUserCashOrder } from '../../actions/user';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import dynamic from 'next/dynamic'; // because we're gonna use a rich text editor and we only want it to work with the client not the server
@@ -36,7 +36,8 @@ function CheckoutPage() {
 	} = values;
 
 	const dispatch = useDispatch();
-	const { user } = useSelector((state) => ({ ...state }));
+	const { user, cashOnDelivery } = useSelector((state) => ({ ...state }));
+	const couponTrueOrFalse = useSelector((state) => state.coupon);
 
 	useEffect(() => {
 		if (user && user.token) {
@@ -183,6 +184,37 @@ function CheckoutPage() {
 		return discountSuccess && <p className="text-success p-2">{discountSuccess}</p>;
 	};
 
+	const createCashOrder = () => {
+		createUserCashOrder(user.token, cashOnDelivery, couponTrueOrFalse).then((res) => {
+			console.log(`User Cash Order created `, res);
+			toast.success('You have successfully placed order, check your history page to see your order details');
+			// empty cart from local storage
+			if (typeof window !== 'undefined') localStorage.removeItem('cart');
+			// empty cart from redux
+			dispatch({
+				type: 'ADD_TO_CART',
+				payload: []
+			});
+
+			// reset coupon
+			dispatch({
+				type: 'COUPON_APPLIED',
+				payload: false
+			});
+			// reset cashOnDelivery
+			dispatch({
+				type: 'SET_CASH_ON_DELIVERY',
+				payload: false
+			});
+			// empty cart from db
+			emptyUserCart(user.token);
+			// redirect
+			setTimeout(() => {
+				Router.push('/user/history');
+			}, 2000);
+		});
+	};
+
 	return (
 		<React.Fragment>
 			<Layout>
@@ -227,13 +259,23 @@ function CheckoutPage() {
 
 							<div className="row">
 								<div className="col-md-6">
-									<button
-										className="btn btn-primary btn-raised"
-										disabled={!addressSaved || !products.length}
-										onClick={() => Router.push('/payment')}
-									>
-										Place Order
-									</button>
+									{cashOnDelivery ? (
+										<button
+											className="btn btn-primary btn-raised"
+											disabled={!addressSaved || !products.length}
+											onClick={createCashOrder}
+										>
+											Place Order
+										</button>
+									) : (
+										<button
+											className="btn btn-primary btn-raised"
+											disabled={!addressSaved || !products.length}
+											onClick={() => Router.push('/payment')}
+										>
+											Place Order
+										</button>
+									)}
 								</div>
 								<div className="col-md-6">
 									<button
