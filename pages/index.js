@@ -1,13 +1,22 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import Layout from '../components/Layout';
-
+import { Spin } from 'antd';
 import Hero from '../components/Hero';
-import NewArrivals from '../components/home/NewArrivals';
-import BestSellers from '../components/home/BestSellers';
-import CategoryList from '../components/category/CategoryList';
-import SubList from '../components/sub/SubList';
+const NewArrivals = dynamic(() => import('../components/home/NewArrivals'), {
+	loading: () => <Spin tip={`Loading...`} />
+});
+const BestSellers = dynamic(() => import('../components/home/BestSellers'), {
+	loading: () => <Spin tip={`Loading...`} />
+});
+const CategoryList = dynamic(() => import('../components/category/CategoryList'), {
+	loading: () => <Spin tip={`Loading...`} />
+});
+const SubList = dynamic(() => import('../components/sub/SubList'), {
+	loading: () => <Spin tip={`Loading...`} />
+});
 
 const Home = () => {
 	return (
